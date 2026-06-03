@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ข้อมูลโรงเรียนนวัตกรรม จังหวัดเชียงใหม่</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Kanit:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface2: #1c2230;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --accent: #f0a500;
+    --accent2: #e05c3a;
+    --accent3: #3a9bd5;
+    --gen1: #2ea043;
+    --gen2: #1f6feb;
+    --gen3: #a371f7;
+    --shadow: 0 4px 24px rgba(0,0,0,0.4);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'Sarabun', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ===== HEADER ===== */
+  header {
+    background: linear-gradient(135deg, #0d1117 0%, #1a2540 50%, #0d1117 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 28px 40px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -80px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(240,165,0,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: 30%;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(58,155,213,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .header-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    position: relative;
+    z-index: 1;
+  }
+  .header-icon {
+    width: 56px; height: 56px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px;
+    box-shadow: 0 4px 16px rgba(240,165,0,0.3);
+    flex-shrink: 0;
+  }
+  .header-text h1 {
+    font-family: 'Kanit', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+  }
+  .header-text p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-top: 3px;
+  }
+  .header-badge {
+    margin-left: auto;
+    background: rgba(240,165,0,0.12);
+    border: 1px solid rgba(240,165,0,0.3);
+    color: var(--accent);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  /* ===== MAIN LAYOUT ===== */
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 32px 40px 60px;
+  }
+
+  /* ===== STAT CARDS ===== */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px 22px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .stat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    border-radius: 16px 16px 0 0;
+  }
+  .stat-card.total::before { background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+  .stat-card.g1::before   { background: var(--gen1); }
+  .stat-card.g2::before   { background: var(--gen2); }
+  .stat-card.g3::before   { background: var(--gen3); }
+  .stat-card.sangkad::before { background: var(--accent3); }
+  .stat-icon {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+  }
+  .stat-value {
+    font-family: 'Kanit', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--text);
+  }
+  .stat-label {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+  .stat-sub {
+    font-size: 0.75rem;
+    margin-top: 6px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    display: inline-block;
+    font-weight: 500;
+  }
+  .g1 .stat-sub { background: rgba(46,160,67,0.15); color: var(--gen1); }
+  .g2 .stat-sub { background: rgba(31,111,235,0.15); color: var(--gen2); }
+  .g3 .stat-sub { background: rgba(163,113,247,0.15); color: var(--gen3); }
+
+  /* ===== CHARTS ROW ===== */
+  .charts-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 28px;
+  }
+  @media (max-width: 800px) { .charts-row { grid-template-columns: 1fr; } }
+
+  .chart-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 22px 24px;
+  }
+  .chart-title {
+    font-family: 'Kanit', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .bar-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .bar-label {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    width: 160px;
+    flex-shrink: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .bar-track {
+    flex: 1;
+    background: var(--surface2);
+    border-radius: 4px;
+    height: 10px;
+    overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.8s cubic-bezier(.4,0,.2,1);
+  }
+  .bar-count {
+    font-size: 0.78rem;
+    color: var(--text);
+    font-weight: 600;
+    width: 26px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  /* pie chart */
+  .pie-container {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  }
+  .pie-svg-wrap { flex-shrink: 0; }
+  .pie-legend { flex: 1; }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    font-size: 0.85rem;
+  }
+  .legend-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .legend-name { color: var(--text); flex: 1; }
+  .legend-num { font-weight: 700; color: var(--text); }
+  .legend-pct { color: var(--text-muted); font-size: 0.78rem; }
+
+  /* ===== SEARCH + FILTER ===== */
+  .controls-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .search-wrap {
+    position: relative;
+    flex: 1;
+    min-width: 220px;
+  }
+  .search-icon {
+    position: absolute;
+    left: 14px; top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    font-size: 1rem;
+    pointer-events: none;
+  }
+  .search-input {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 10px 14px 10px 42px;
+    font-family: 'Sarabun', sans-serif;
+    font-size: 0.95rem;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .search-input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(240,165,0,0.15);
+  }
+  .search-input::placeholder { color: var(--text-muted); }
+
+  select.filter-select {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-family: 'Sarabun', sans-serif;
+    font-size: 0.88rem;
+    color: var(--text);
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  select.filter-select:focus { border-color: var(--accent); }
+
+  .result-count {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-left: auto;
+    white-space: nowrap;
+  }
+  .result-count span { color: var(--accent); font-weight: 700; }
+
+  /* ===== TABLE ===== */
+  .table-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .table-wrap {
+    overflow-x: auto;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  thead {
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+  }
+  th {
+    padding: 13px 18px;
+    font-family: 'Kanit', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-align: left;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    white-space: nowrap;
+    user-select: none;
+    transition: color 0.2s;
+  }
+  th:hover { color: var(--accent); }
+  th .sort-icon { margin-left: 4px; opacity: 0.5; }
+  th.sorted .sort-icon { opacity: 1; color: var(--accent); }
+
+  tbody tr {
+    border-bottom: 1px solid rgba(48,54,61,0.6);
+    transition: background 0.15s;
+  }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(240,165,0,0.04); }
+
+  td {
+    padding: 12px 18px;
+    font-size: 0.9rem;
+    color: var(--text);
+  }
+  td.num { color: var(--text-muted); font-size: 0.82rem; }
+  td.name { font-weight: 500; }
+  td.sangkad { color: var(--text-muted); font-size: 0.83rem; }
+
+  .year-badge {
+    display: inline-block;
+    background: rgba(58,155,213,0.12);
+    color: var(--accent3);
+    border: 1px solid rgba(58,155,213,0.25);
+    border-radius: 6px;
+    padding: 2px 9px;
+    font-size: 0.78rem;
+    font-weight: 600;
+  }
+  .gen-badge {
+    display: inline-block;
+    border-radius: 20px;
+    padding: 3px 12px;
+    font-size: 0.78rem;
+    font-weight: 600;
+  }
+  .gen-1 { background: rgba(46,160,67,0.15); color: var(--gen1); border: 1px solid rgba(46,160,67,0.25); }
+  .gen-2 { background: rgba(31,111,235,0.15); color: var(--gen2); border: 1px solid rgba(31,111,235,0.25); }
+  .gen-3 { background: rgba(163,113,247,0.15); color: var(--gen3); border: 1px solid rgba(163,113,247,0.25); }
+
+  .no-result {
+    text-align: center;
+    padding: 56px 20px;
+    color: var(--text-muted);
+    font-size: 1rem;
+  }
+  .no-result .icon { font-size: 2.5rem; display: block; margin-bottom: 10px; }
+
+  /* pagination */
+  .pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .page-info { font-size: 0.82rem; color: var(--text-muted); }
+  .page-btns { display: flex; gap: 6px; align-items: center; }
+  .page-btn {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 8px;
+    padding: 5px 12px;
+    font-size: 0.82rem;
+    font-family: 'Sarabun', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .page-btn:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+  .page-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+  .page-btn.active { background: var(--accent); border-color: var(--accent); color: #0d1117; font-weight: 700; }
+  .page-size-select {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 8px;
+    padding: 5px 10px;
+    font-size: 0.82rem;
+    font-family: 'Sarabun', sans-serif;
+    cursor: pointer;
+    outline: none;
+  }
+
+  /* highlight match */
+  mark {
+    background: rgba(240,165,0,0.3);
+    color: var(--accent);
+    border-radius: 2px;
+    padding: 0 1px;
+  }
+
+  /* footer */
+  footer {
+    text-align: center;
+    padding: 24px;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    border-top: 1px solid var(--border);
+  }
+
+  @media (max-width: 600px) {
+    .container { padding: 20px 16px 40px; }
+    header { padding: 18px 16px; }
+    .header-badge { display: none; }
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .bar-label { width: 110px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="header-icon">🏫</div>
+    <div class="header-text">
+      <h1>โรงเรียนนวัตกรรม จังหวัดเชียงใหม่</h1>
+      <p>ระบบสรุปข้อมูลและค้นหาโรงเรียนที่เข้าร่วมโครงการนวัตกรรม</p>
+    </div>
+    <div class="header-badge">📊 180 โรงเรียน</div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- STAT CARDS -->
+  <div class="stats-grid" id="statsGrid"></div>
+
+  <!-- CHARTS -->
+  <div class="charts-row">
+    <div class="chart-card">
+      <div class="chart-title">🏛 สังกัดโรงเรียน</div>
+      <div id="sangkadChart"></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">📆 การเข้าร่วมตามปีการศึกษา</div>
+      <div id="yearChart"></div>
+    </div>
+  </div>
+
+  <!-- SEARCH & FILTER -->
+  <div class="controls-row">
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="text" class="search-input" id="searchInput" placeholder="ค้นหาชื่อโรงเรียน หรือสังกัด...">
+    </div>
+    <select class="filter-select" id="filterSangkad">
+      <option value="">— สังกัดทั้งหมด —</option>
+    </select>
+    <select class="filter-select" id="filterGen">
+      <option value="">— ทุกรุ่น —</option>
+      <option value="1">รุ่นที่ 1</option>
+      <option value="2">รุ่นที่ 2</option>
+      <option value="3">รุ่นที่ 3</option>
+    </select>
+    <select class="filter-select" id="filterYear">
+      <option value="">— ทุกปี —</option>
+    </select>
+    <div class="result-count" id="resultCount"></div>
+  </div>
+
+  <!-- TABLE -->
+  <div class="table-card">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th onclick="sortBy('id')" id="th-id">ที่ <span class="sort-icon">↕</span></th>
+            <th onclick="sortBy('name')" id="th-name">ชื่อโรงเรียน <span class="sort-icon">↕</span></th>
+            <th onclick="sortBy('sangkad')" id="th-sangkad">สังกัด <span class="sort-icon">↕</span></th>
+            <th onclick="sortBy('year')" id="th-year">ปีที่เข้าร่วม <span class="sort-icon">↕</span></th>
+            <th onclick="sortBy('gen')" id="th-gen">รุ่นที่ <span class="sort-icon">↕</span></th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+    <div class="pagination" id="paginationBar"></div>
+  </div>
+</div>
+
+<footer>
+  ข้อมูลโรงเรียนนวัตกรรม จังหวัดเชียงใหม่ &nbsp;·&nbsp; จัดทำโดยระบบ Dashboard &nbsp;·&nbsp; อัปเดตปี 2568
+</footer>
+
+<script>
+const RAW = [{"id":"1","name":"ชุมชนบ้านบวกครกน้อย","sangkad":"สพป.เชียงใหม่ เขต 1","year":"2562","gen":"1"},{"id":"2","name":"เทพเสด็จวิทยา","sangkad":"สพป.เชียงใหม่ เขต 1","year":"2562","gen":"1"},{"id":"3","name":"บ้านตลาดขี้เหล็ก","sangkad":"สพป.เชียงใหม่ เขต 1","year":"2562","gen":"1"},{"id":"4","name":"บ้านโป่งน้อย","sangkad":"สพป.เชียงใหม่ เขต 1","year":"2562","gen":"1"},{"id":"5","name":"หมู่บ้านสหกรณ์ 2","sangkad":"สพป.เชียงใหม่ เขต 1","year":"2562","gen":"1"},{"id":"6","name":"คำเที่ยงอนุสสรณ์","sangkad":"สพป.เชียงใหม่ เขต 1","year":"2563","gen":"2"},{"id":"7","name":"แม่คือวิทยา","sangkad":"สพป.เชียงใหม่ เขต 1","year":"2563","gen":"2"},{"id":"8","name":"แม่โป่งประชาสามัคคี","sangkad":"สพป.เชียงใหม่ เขต 1","year":"2563","gen":"2"},{"id":"9","name":"วัดข่วงสิงห์","sangkad":"สพป.เชียงใหม่ เขต 1","year":"2563","gen":"2"},{"id":"10","name":"ศรีเนห์รู","sangkad":"สพป.เชียงใหม่ เขต 1","year":"2563","gen":"2"},{"id":"11","name":"อนุบาลเชียงใหม่","sangkad":"สพป.เชียงใหม่ เขต 1","year":"2563","gen":"2"},{"id":"12","name":"ทาเหนือวิทยา","sangkad":"สพป.เชียงใหม่ เขต 1","year":"2566(2)","gen":"3"},{"id":"13","name":"บ้านเชิงดอยสุเทพ","sangkad":"สพป.เชียงใหม่ เขต 1","year":"2566(2)","gen":"3"},{"id":"14","name":"บ้านบวกค้าง","sangkad":"สพป.เชียงใหม่ เขต 1","year":"2566(2)","gen":"3"},{"id":"15","name":"บ้านป่าเสร้า","sangkad":"สพป.เชียงใหม่ เขต 1","year":"2566(2)","gen":"3"},{"id":"16","name":"บ้านป่าเหมือด","sangkad":"สพป.เชียงใหม่ เขต 1","year":"2566(2)","gen":"3"},{"id":"17","name":"บ้านแม่หวาน","sangkad":"สพป.เชียงใหม่ เขต 1","year":"2566(2)","gen":"3"},{"id":"18","name":"บ้านแม่ฮ้อยเงิน","sangkad":"สพป.เชียงใหม่ เขต 1","year":"2566(2)","gen":"3"},{"id":"19","name":"บ้านออนกลาง","sangkad":"สพป.เชียงใหม่ เขต 1","year":"2566(2)","gen":"3"},{"id":"20","name":"วัดเจ็ดยอด","sangkad":"สพป.เชียงใหม่ เขต 1","year":"2566(2)","gen":"3"},{"id":"21","name":"วัดเปาสามขา","sangkad":"สพป.เชียงใหม่ เขต 1","year":"2566(2)","gen":"3"},{"id":"22","name":"วัดร้องวัวแดงศรีจันทร์วิทยาคาร","sangkad":"สพป.เชียงใหม่ เขต 1","year":"2566(2)","gen":"3"},{"id":"23","name":"สันกำแพงคันธาอนุสรณ์","sangkad":"สพป.เชียงใหม่ เขต 1","year":"2566(2)","gen":"3"},{"id":"24","name":"พุทธิโศภน","sangkad":"สพป.เชียงใหม่ เขต 1","year":"2567(1)","gen":"3"},{"id":"25","name":"บ้านเมืองกื้ด","sangkad":"สพป.เชียงใหม่ เขต 2","year":"2562","gen":"1"},{"id":"26","name":"บ้านหนองไคร้","sangkad":"สพป.เชียงใหม่ เขต 2","year":"2562","gen":"1"},{"id":"27","name":"บ้านหนองปลามัน","sangkad":"สพป.เชียงใหม่ เขต 2","year":"2562","gen":"1"},{"id":"28","name":"พร้าวบูรพา","sangkad":"สพป.เชียงใหม่ เขต 2","year":"2562","gen":"1"},{"id":"29","name":"วัดแม่แก้ดน้อย","sangkad":"สพป.เชียงใหม่ เขต 2","year":"2562","gen":"1"},{"id":"30","name":"ชุมชนวัดช่อแล","sangkad":"สพป.เชียงใหม่ เขต 2","year":"2563","gen":"2"},{"id":"31","name":"บ้านต้นรุง","sangkad":"สพป.เชียงใหม่ เขต 2","year":"2563","gen":"2"},{"id":"32","name":"บ้านนาบุญโหล่งขอด","sangkad":"สพป.เชียงใหม่ เขต 2","year":"2563","gen":"2"},{"id":"33","name":"บ้านบ่อแก้ว","sangkad":"สพป.เชียงใหม่ เขต 2","year":"2563","gen":"2"},{"id":"34","name":"บ้านป่าตุ้ม","sangkad":"สพป.เชียงใหม่ เขต 2","year":"2563","gen":"2"},{"id":"35","name":"บ้านพระนอน","sangkad":"สพป.เชียงใหม่ เขต 2","year":"2563","gen":"2"},{"id":"36","name":"บ้านแม่โจ้","sangkad":"สพป.เชียงใหม่ เขต 2","year":"2563","gen":"2"},{"id":"37","name":"บ้านสะลวงนอก","sangkad":"สพป.เชียงใหม่ เขต 2","year":"2563","gen":"2"},{"id":"38","name":"วัดโป่งแยงเฉลิมพระเกียรติ","sangkad":"สพป.เชียงใหม่ เขต 2","year":"2563","gen":"2"},{"id":"39","name":"บ้านปางไม้แดง","sangkad":"สพป.เชียงใหม่ เขต 2","year":"2566(2)","gen":"3"},{"id":"40","name":"บ้านปางห้วยตาด","sangkad":"สพป.เชียงใหม่ เขต 2","year":"2566(2)","gen":"3"},{"id":"41","name":"บ้านแม่ตะมาน","sangkad":"สพป.เชียงใหม่ เขต 2","year":"2566(2)","gen":"3"},{"id":"42","name":"ป่าจี้วังแดงวิทยา","sangkad":"สพป.เชียงใหม่ เขต 2","year":"2566(2)","gen":"3"},{"id":"43","name":"บ้านหัวฝาย (อำเภอสันทราย)","sangkad":"สพป.เชียงใหม่ เขต 2","year":"2567(1)","gen":"3"},{"id":"44","name":"ชุมชนบ้านโป่ง","sangkad":"สพป.เชียงใหม่ เขต 2","year":"2567(2)","gen":"3"},{"id":"45","name":"บ้านป่าลาน","sangkad":"สพป.เชียงใหม่ เขต 2","year":"2567(2)","gen":"3"},{"id":"46","name":"บ้านป่าเหมือด","sangkad":"สพป.เชียงใหม่ เขต 2","year":"2567(2)","gen":"3"},{"id":"47","name":"บ้านแม่เลา","sangkad":"สพป.เชียงใหม่ เขต 2","year":"2567(2)","gen":"3"},{"id":"48","name":"บ้านศรีงาม","sangkad":"สพป.เชียงใหม่ เขต 2","year":"2567(2)","gen":"3"},{"id":"49","name":"บานแมไคร้","sangkad":"สพป.เชียงใหม่ เขต 2","year":"2567(2)","gen":"3"},{"id":"50","name":"สหกรณ์ดำริ","sangkad":"สพป.เชียงใหม่ เขต 2","year":"2567(2)","gen":"3"},{"id":"51","name":"บ้านแม่สา","sangkad":"สพป.เชียงใหม่ เขต 2","year":"2568(1)","gen":"3"},{"id":"52","name":"บ้านแม่แสะ","sangkad":"สพป.เชียงใหม่ เขต 2","year":"2568(1)","gen":"3"},{"id":"53","name":"บ้านสันพระเนตร","sangkad":"สพป.เชียงใหม่ เขต 2","year":"2568(1)","gen":"3"},{"id":"54","name":"บ้านแม่ขะปู","sangkad":"สพป.เชียงใหม่ เขต 2","year":"2569(1)","gen":"3"},{"id":"55","name":"บ้านสันคะยอม","sangkad":"สพป.เชียงใหม่ เขต 2","year":"2569(1)","gen":"3"},{"id":"56","name":"บ้านขอบด้ง","sangkad":"สพป.เชียงใหม่ เขต 3","year":"2562","gen":"1"},{"id":"57","name":"บ้านผาแดง","sangkad":"สพป.เชียงใหม่ เขต 3","year":"2562","gen":"1"},{"id":"58","name":"บ้านสันต้นหมื้อ","sangkad":"สพป.เชียงใหม่ เขต 3","year":"2562","gen":"1"},{"id":"59","name":"บ้านหลวง","sangkad":"สพป.เชียงใหม่ เขต 3","year":"2562","gen":"1"},{"id":"60","name":"บ้านห้วยคอกหมู","sangkad":"สพป.เชียงใหม่ เขต 3","year":"2562","gen":"1"},{"id":"61","name":"เพียงหลวง 1  (บ้านท่าตอน) ฯ","sangkad":"สพป.เชียงใหม่ เขต 3","year":"2562","gen":"1"},{"id":"62","name":"สันติวนา","sangkad":"สพป.เชียงใหม่ เขต 3","year":"2562","gen":"1"},{"id":"63","name":"เทพศิรินทร์ 9","sangkad":"สพป.เชียงใหม่ เขต 3","year":"2563","gen":"2"},{"id":"64","name":"บ้านกองลม","sangkad":"สพป.เชียงใหม่ เขต 3","year":"2563","gen":"2"},{"id":"65","name":"บ้านดงป่าลัน","sangkad":"สพป.เชียงใหม่ เขต 3","year":"2563","gen":"2"},{"id":"66","name":"บ้านนาหวาย","sangkad":"สพป.เชียงใหม่ เขต 3","year":"2563","gen":"2"},{"id":"67","name":"บ้านเปียงหลวง","sangkad":"สพป.เชียงใหม่ เขต 3","year":"2563","gen":"2"},{"id":"68","name":"บ้านแม่งอนกลาง","sangkad":"สพป.เชียงใหม่ เขต 3","year":"2563","gen":"2"},{"id":"69","name":"บ้านแม่อ้อใน","sangkad":"สพป.เชียงใหม่ เขต 3","year":"2563","gen":"2"},{"id":"70","name":"บ้านรินหลวง","sangkad":"สพป.เชียงใหม่ เขต 3","year":"2563","gen":"2"},{"id":"71","name":"บ้านเวียงฝาง","sangkad":"สพป.เชียงใหม่ เขต 3","year":"2563","gen":"2"},{"id":"72","name":"บ้านหนองขวาง","sangkad":"สพป.เชียงใหม่ เขต 3","year":"2563","gen":"2"},{"id":"73","name":"บ้านออน","sangkad":"สพป.เชียงใหม่ เขต 3","year":"2563","gen":"2"},{"id":"74","name":"วิรุณเทพ","sangkad":"สพป.เชียงใหม่ เขต 3","year":"2563","gen":"2"},{"id":"75","name":"บ้านป่าบง","sangkad":"สพป.เชียงใหม่ เขต 3","year":"2566(2)","gen":"3"},{"id":"76","name":"บ้านหนองยาว","sangkad":"สพป.เชียงใหม่ เขต 3","year":"2566(2)","gen":"3"},{"id":"77","name":"บ้านเวียงแหง","sangkad":"สพป.เชียงใหม่ เขต 3","year":"2567(1)","gen":"3"},{"id":"78","name":"บ้านปางป๋อ","sangkad":"สพป.เชียงใหม่ เขต 3","year":"2569(1)","gen":"3"},{"id":"79","name":"บ้านโป่งถืบ","sangkad":"สพป.เชียงใหม่ เขต 3","year":"2569(1)","gen":"3"},{"id":"80","name":"บ้านแม่แมะ","sangkad":"สพป.เชียงใหม่ เขต 3","year":"2569(1)","gen":"3"},{"id":"81","name":"รัฐราษฎร์อุปถัมภ์","sangkad":"สพป.เชียงใหม่ เขต 3","year":"2569(1)","gen":"3"},{"id":"82","name":"บ้านป่าตาล","sangkad":"สพป.เชียงใหม่ เขต 4","year":"2562","gen":"1"},{"id":"83","name":"บ้านพันตน","sangkad":"สพป.เชียงใหม่ เขต 4","year":"2562","gen":"1"},{"id":"84","name":"บ้านห้วยข้าวลีบ","sangkad":"สพป.เชียงใหม่ เขต 4","year":"2562","gen":"1"},{"id":"85","name":"บ้านเหล่าเป้า","sangkad":"สพป.เชียงใหม่ เขต 4","year":"2562","gen":"1"},{"id":"86","name":"แม่วินสามัคคี","sangkad":"สพป.เชียงใหม่ เขต 4","year":"2562","gen":"1"},{"id":"87","name":"สันป่าตอง(สุวรรณราษฎร์วิทยาคาร)","sangkad":"สพป.เชียงใหม่ เขต 4","year":"2562","gen":"1"},{"id":"88","name":"บ้านวังศรี","sangkad":"สพป.เชียงใหม่ เขต 4","year":"2566(1)","gen":"3"},{"id":"89","name":"วัดเวฬุวัน","sangkad":"สพป.เชียงใหม่ เขต 4","year":"2566(1)","gen":"3"},{"id":"90","name":"วัดพญาชมภู","sangkad":"สพป.เชียงใหม่ เขต 4","year":"2569(1)","gen":"3"},{"id":"91","name":"บ้านขุนแม่ตื่นน้อย","sangkad":"สพป.เชียงใหม่ เขต 5","year":"2562","gen":"1"},{"id":"92","name":"บ้านตุงติง","sangkad":"สพป.เชียงใหม่ เขต 5","year":"2562","gen":"1"},{"id":"93","name":"บ้านพุย","sangkad":"สพป.เชียงใหม่ เขต 5","year":"2562","gen":"1"},{"id":"94","name":"บ้านมูเซอ","sangkad":"สพป.เชียงใหม่ เขต 5","year":"2562","gen":"1"},{"id":"95","name":"บ้านยางเปา","sangkad":"สพป.เชียงใหม่ เขต 5","year":"2562","gen":"1"},{"id":"96","name":"บ้านสบลาน","sangkad":"สพป.เชียงใหม่ เขต 5","year":"2562","gen":"1"},{"id":"97","name":"บ้านห้วยน้ำขาว","sangkad":"สพป.เชียงใหม่ เขต 5","year":"2562","gen":"1"},{"id":"98","name":"บ้านห้วยปูลิง","sangkad":"สพป.เชียงใหม่ เขต 5","year":"2562","gen":"1"},{"id":"99","name":"บ้านห่างหลวง","sangkad":"สพป.เชียงใหม่ เขต 5","year":"2562","gen":"1"},{"id":"100","name":"บ้านตาลเหนือ","sangkad":"สพป.เชียงใหม่ เขต 5","year":"2563","gen":"2"},{"id":"101","name":"บ้านแม่บวน","sangkad":"สพป.เชียงใหม่ เขต 5","year":"2563","gen":"2"},{"id":"102","name":"บ้านยางครก","sangkad":"สพป.เชียงใหม่ เขต 5","year":"2563","gen":"2"},{"id":"103","name":"บ้านห้วยไม้หก","sangkad":"สพป.เชียงใหม่ เขต 5","year":"2563","gen":"2"},{"id":"104","name":"บ้านผาปูน","sangkad":"สพป.เชียงใหม่ เขต 5","year":"2569(1)","gen":"3"},{"id":"105","name":"ชุมชนบ้านช่างเคิ่ง","sangkad":"สพป.เชียงใหม่ เขต 6","year":"2562","gen":"1"},{"id":"106","name":"บ้านขุนแตะ","sangkad":"สพป.เชียงใหม่ เขต 6","year":"2562","gen":"1"},{"id":"107","name":"บ้านทุ่งแก","sangkad":"สพป.เชียงใหม่ เขต 6","year":"2562","gen":"1"},{"id":"108","name":"บ้านนากลาง","sangkad":"สพป.เชียงใหม่ เขต 6","year":"2562","gen":"1"},{"id":"109","name":"บ้านนากลาง สาขาห้วยผักกูด","sangkad":"สพป.เชียงใหม่ เขต 6","year":"2562","gen":"1"},{"id":"110","name":"บ้านบนนา","sangkad":"สพป.เชียงใหม่ เขต 6","year":"2562","gen":"1"},{"id":"111","name":"บ้านแม่มุ","sangkad":"สพป.เชียงใหม่ เขต 6","year":"2562","gen":"1"},{"id":"112","name":"บ้านแม่เอาะ","sangkad":"สพป.เชียงใหม่ เขต 6","year":"2562","gen":"1"},{"id":"113","name":"บ้านสบแม่รวม","sangkad":"สพป.เชียงใหม่ เขต 6","year":"2562","gen":"1"},{"id":"114","name":"บ้านสองธาร","sangkad":"สพป.เชียงใหม่ เขต 6","year":"2562","gen":"1"},{"id":"115","name":"บ้านห้วยสะแพด","sangkad":"สพป.เชียงใหม่ เขต 6","year":"2562","gen":"1"},{"id":"116","name":"บ้านแม่แดดน้อย","sangkad":"สพป.เชียงใหม่ เขต 6","year":"2563","gen":"2"},{"id":"117","name":"บ้านกองแขก","sangkad":"สพป.เชียงใหม่ เขต 6","year":"2566(1)","gen":"3"},{"id":"118","name":"บ้านขุนยะ","sangkad":"สพป.เชียงใหม่ เขต 6","year":"2566(1)","gen":"3"},{"id":"119","name":"บ้านทัพ","sangkad":"สพป.เชียงใหม่ เขต 6","year":"2566(1)","gen":"3"},{"id":"120","name":"บ้านปางอุ๋ง  สาขาแม่สะต๊อบ","sangkad":"สพป.เชียงใหม่ เขต 6","year":"2566(1)","gen":"3"},{"id":"121","name":"บ้านแปะสามัคคี","sangkad":"สพป.เชียงใหม่ เขต 6","year":"2566(1)","gen":"3"},{"id":"122","name":"บ้านแม่หงานหลวง","sangkad":"สพป.เชียงใหม่ เขต 6","year":"2566(1)","gen":"3"},{"id":"123","name":"บ้านท่าข้าม","sangkad":"สพป.เชียงใหม่ เขต 6","year":"2569(1)","gen":"3"},{"id":"124","name":"บ้านปางหินฝน","sangkad":"สพป.เชียงใหม่ เขต 6","year":"2569(1)","gen":"3"},{"id":"125","name":"บ้านพุย สาขาพุยใต้","sangkad":"สพป.เชียงใหม่ เขต 6","year":"2569(1)","gen":"3"},{"id":"126","name":"หลวงพัฒนาบ้านพุย","sangkad":"สพป.เชียงใหม่ เขต 6","year":"2569(1)","gen":"3"},{"id":"127","name":"เชียงดาววิทยาคม","sangkad":"สพม.เชียงใหม่","year":"2563","gen":"2"},{"id":"128","name":"ดอยเต่าวิทยาคม","sangkad":"สพม.เชียงใหม่","year":"2563","gen":"2"},{"id":"129","name":"ฝางชนูปถัมภ์","sangkad":"สพม.เชียงใหม่","year":"2563","gen":"2"},{"id":"130","name":"มัธยมกัลยาณิวัฒนาเฉลิมพระเกียรติ","sangkad":"สพม.เชียงใหม่","year":"2563","gen":"2"},{"id":"131","name":"แม่แจ่ม","sangkad":"สพม.เชียงใหม่","year":"2563","gen":"2"},{"id":"132","name":"แม่แตง","sangkad":"สพม.เชียงใหม่","year":"2563","gen":"2"},{"id":"133","name":"แม่ริมวิทยาคม","sangkad":"สพม.เชียงใหม่","year":"2563","gen":"2"},{"id":"134","name":"ยุพราชวิทยาลัย","sangkad":"สพม.เชียงใหม่","year":"2563","gen":"2"},{"id":"135","name":"สันป่าตองวิทยาคม","sangkad":"สพม.เชียงใหม่","year":"2563","gen":"2"},{"id":"136","name":"จอมทอง","sangkad":"สพม.เชียงใหม่","year":"2567(1)","gen":"3"},{"id":"137","name":"นวมินทราชูทิศ พายัพ","sangkad":"สพม.เชียงใหม่","year":"2567(1)","gen":"3"},{"id":"138","name":"วัฒโนทัยพายัพ","sangkad":"สพม.เชียงใหม่","year":"2567(1)","gen":"3"},{"id":"139","name":"เวียงแหงวิทยาคม","sangkad":"สพม.เชียงใหม่","year":"2567(1)","gen":"3"},{"id":"140","name":"สันกำแพง","sangkad":"สพม.เชียงใหม่","year":"2567(1)","gen":"3"},{"id":"141","name":"สันทรายวิทยาคม","sangkad":"สพม.เชียงใหม่","year":"2567(1)","gen":"3"},{"id":"142","name":"สันป่ายางวิทยาคม","sangkad":"สพม.เชียงใหม่","year":"2567(1)","gen":"3"},{"id":"143","name":"สันติสุข","sangkad":"สพม.เชียงใหม่","year":"2567(2)","gen":"3"},{"id":"144","name":"สารภีพิทยาคม","sangkad":"สพม.เชียงใหม่","year":"2567(2)","gen":"3"},{"id":"145","name":"เทพศิรินทร์ เชียงใหม่","sangkad":"สพม.เชียงใหม่","year":"2569(1)","gen":"3"},{"id":"146","name":"หอพระ","sangkad":"สพม.เชียงใหม่","year":"2569(1)","gen":"3"},{"id":"147","name":"ราชประชานุเคราะห์ 31 จังหวัดเชียงใหม่","sangkad":"สำนักบริหารงานการศึกษาพิเศษ","year":"2562","gen":"1"},{"id":"148","name":"ศึกษาสงเคราะห์เขียงใหม่","sangkad":"สำนักบริหารงานการศึกษาพิเศษ","year":"2562","gen":"1"},{"id":"149","name":"สอนคนตาบอดภาคเหนือในพระบรมราชินูปถัมภ์ จังหวัดเชียงใหม่","sangkad":"สำนักบริหารงานการศึกษาพิเศษ","year":"2562","gen":"1"},{"id":"150","name":"กาวิละอนุกูล","sangkad":"สำนักบริหารงานการศึกษาพิเศษ","year":"2563","gen":"2"},{"id":"151","name":"ราชประชานุเคราะห์ 30","sangkad":"สำนักบริหารงานการศึกษาพิเศษ","year":"2563","gen":"2"},{"id":"152","name":"ศรีสังวาลย์เชียงใหม่","sangkad":"สำนักบริหารงานการศึกษาพิเศษ","year":"2563","gen":"2"},{"id":"153","name":"ศึกษาสงเคราะห์เชียงดาว","sangkad":"สำนักบริหารงานการศึกษาพิเศษ","year":"2566(2)","gen":"3"},{"id":"154","name":"ต้นแก้วผดุงพิทยาลัย","sangkad":"อบจ.เชียงใหม่","year":"2562","gen":"1"},{"id":"155","name":"บ้านศาลา","sangkad":"อบจ.เชียงใหม่","year":"2562","gen":"1"},{"id":"156","name":"บ้านแม่งอนขี้เหล็ก","sangkad":"อบจ.เชียงใหม่","year":"2563","gen":"2"},{"id":"157","name":"แม่อายวิทยาคม","sangkad":"อบจ.เชียงใหม่","year":"2566(1)","gen":"3"},{"id":"158","name":"ชุมชนเทศบาลวัดศรีดอนไชย","sangkad":"เทศบาลนครเชียงใหม่","year":"2566(2)","gen":"3"},{"id":"159","name":"เชียงใหม่คริสเตียน","sangkad":"สช.","year":"2562","gen":"1"},{"id":"160","name":"ดาราวิทยาลัย","sangkad":"สช.","year":"2562","gen":"1"},{"id":"161","name":"บ้านปลาดาว","sangkad":"สช.","year":"2562","gen":"1"},{"id":"162","name":"ปรินส์รอยแยลส์วิทยาลัย","sangkad":"สช.","year":"2562","gen":"1"},{"id":"163","name":"พิมานเด็กเชียงใหม่","sangkad":"สช.","year":"2562","gen":"1"},{"id":"164","name":"รัตนาเอื้อวิทยา","sangkad":"สช.","year":"2562","gen":"1"},{"id":"165","name":"สวนเด็กสันกำแพง","sangkad":"สช.","year":"2562","gen":"1"},{"id":"166","name":"สหวิทย์พิมานเชียงใหม่","sangkad":"สช.","year":"2562","gen":"1"},{"id":"167","name":"อนุบาลร่มแก้ว","sangkad":"สช.","year":"2562","gen":"1"},{"id":"168","name":"อนุบาลสุมาลี","sangkad":"สช.","year":"2562","gen":"1"},{"id":"169","name":"เอื้อวิทยา","sangkad":"สช.","year":"2562","gen":"1"},{"id":"170","name":"ฉือจี้เชียงใหม่","sangkad":"สช.","year":"2566(1)","gen":"3"},{"id":"171","name":"ณัทชวิทย์","sangkad":"สช.","year":"2566(1)","gen":"3"},{"id":"172","name":"นันทชาติ เกรด สคูล","sangkad":"สช.","year":"2566(1)","gen":"3"},{"id":"173","name":"วีรยาเชียงใหม่","sangkad":"สช.","year":"2566(1)","gen":"3"},{"id":"174","name":"อนุบาลไผ่แก้ว","sangkad":"สช.","year":"2566(1)","gen":"3"},{"id":"175","name":"อนุบาลภัททิรา","sangkad":"สช.","year":"2566(1)","gen":"3"},{"id":"176","name":"อนุบาลรัตนกาญจน์","sangkad":"สช.","year":"2566(1)","gen":"3"},{"id":"177","name":"อนุบาลสุรีย์วรรณ","sangkad":"สช.","year":"2566(1)","gen":"3"},{"id":"178","name":"เทพบดินทร์วิทยาเชียงใหม่","sangkad":"สช.","year":"2568(1)","gen":"3"},{"id":"179","name":"ธีระวัธน์บำเพ็ญ","sangkad":"สช.","year":"2569(1)","gen":"3"},{"id":"180","name":"รังษีวิทยา","sangkad":"สช.","year":"2569(1)","gen":"3"}];
+
+// ===================== STATE =====================
+let filtered = [...RAW];
+let sortField = 'id';
+let sortAsc = true;
+let page = 1;
+let pageSize = 20;
+let searchQ = '';
+let fSangkad = '';
+let fGen = '';
+let fYear = '';
+
+// ===================== INIT =====================
+function init() {
+  buildStats();
+  buildSangkadChart();
+  buildYearChart();
+  populateFilters();
+  applyFilter();
+}
+
+// ===================== STATS =====================
+function buildStats() {
+  const g1 = RAW.filter(r=>r.gen==='1').length;
+  const g2 = RAW.filter(r=>r.gen==='2').length;
+  const g3 = RAW.filter(r=>r.gen==='3').length;
+  const sangkadCount = new Set(RAW.map(r=>r.sangkad)).size;
+  const html = `
+    <div class="stat-card total">
+      <div class="stat-icon">🏫</div>
+      <div class="stat-value">${RAW.length}</div>
+      <div class="stat-label">โรงเรียนทั้งหมด</div>
+      <div class="stat-sub" style="background:rgba(240,165,0,0.12);color:var(--accent);">จังหวัดเชียงใหม่</div>
+    </div>
+    <div class="stat-card g1">
+      <div class="stat-icon">🌱</div>
+      <div class="stat-value">${g1}</div>
+      <div class="stat-label">โรงเรียนรุ่นที่ 1</div>
+      <div class="stat-sub">ปี 2562</div>
+    </div>
+    <div class="stat-card g2">
+      <div class="stat-icon">🌿</div>
+      <div class="stat-value">${g2}</div>
+      <div class="stat-label">โรงเรียนรุ่นที่ 2</div>
+      <div class="stat-sub">ปี 2563</div>
+    </div>
+    <div class="stat-card g3">
+      <div class="stat-icon">🌳</div>
+      <div class="stat-value">${g3}</div>
+      <div class="stat-label">โรงเรียนรุ่นที่ 3</div>
+      <div class="stat-sub">ปี 2566–2569</div>
+    </div>
+    <div class="stat-card sangkad">
+      <div class="stat-icon">🏛</div>
+      <div class="stat-value">${sangkadCount}</div>
+      <div class="stat-label">สังกัดที่เข้าร่วม</div>
+      <div class="stat-sub" style="background:rgba(58,155,213,0.12);color:var(--accent3);">หน่วยงาน</div>
+    </div>
+  `;
+  document.getElementById('statsGrid').innerHTML = html;
+}
+
+// ===================== SANGKAD CHART =====================
+function buildSangkadChart() {
+  const counts = {};
+  RAW.forEach(r => { counts[r.sangkad] = (counts[r.sangkad]||0)+1; });
+  const sorted = Object.entries(counts).sort((a,b)=>b[1]-a[1]);
+  const max = sorted[0][1];
+  const colors = ['#f0a500','#e05c3a','#3a9bd5','#a371f7','#2ea043','#1f6feb','#e878a0','#46c7a1','#f06a2b','#c7a846','#60a0d8'];
+  let html = '';
+  sorted.forEach(([name,count],i) => {
+    const pct = Math.round(count/max*100);
+    html += `<div class="bar-item">
+      <div class="bar-label" title="${name}">${name}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${colors[i%colors.length]}"></div></div>
+      <div class="bar-count">${count}</div>
+    </div>`;
+  });
+  document.getElementById('sangkadChart').innerHTML = html;
+}
+
+// ===================== YEAR CHART =====================
+function buildYearChart() {
+  const counts = {};
+  RAW.forEach(r => { counts[r.year] = (counts[r.year]||0)+1; });
+  const years = Object.keys(counts).sort();
+  const max = Math.max(...Object.values(counts));
+  const colors = ['#2ea043','#2ea043','#a371f7','#a371f7','#a371f7','#a371f7','#a371f7','#a371f7'];
+  let html = '';
+  years.forEach((y,i) => {
+    const pct = Math.round(counts[y]/max*100);
+    html += `<div class="bar-item">
+      <div class="bar-label">${y}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${colors[i]||'#3a9bd5'}"></div></div>
+      <div class="bar-count">${counts[y]}</div>
+    </div>`;
+  });
+  document.getElementById('yearChart').innerHTML = html;
+}
+
+// ===================== FILTERS =====================
+function populateFilters() {
+  const sangkads = [...new Set(RAW.map(r=>r.sangkad))].sort();
+  const years = [...new Set(RAW.map(r=>r.year))].sort();
+  const selS = document.getElementById('filterSangkad');
+  sangkads.forEach(s => { selS.innerHTML += `<option value="${s}">${s}</option>`; });
+  const selY = document.getElementById('filterYear');
+  years.forEach(y => { selY.innerHTML += `<option value="${y}">${y}</option>`; });
+}
+
+// ===================== APPLY FILTER =====================
+function applyFilter() {
+  const q = searchQ.trim().toLowerCase();
+  filtered = RAW.filter(r => {
+    const matchQ = !q || r.name.toLowerCase().includes(q) || r.sangkad.toLowerCase().includes(q);
+    const matchS = !fSangkad || r.sangkad === fSangkad;
+    const matchG = !fGen || r.gen === fGen;
+    const matchY = !fYear || r.year === fYear;
+    return matchQ && matchS && matchG && matchY;
+  });
+  // sort
+  filtered.sort((a,b) => {
+    let av = a[sortField], bv = b[sortField];
+    if (sortField==='id') { av=+av; bv=+bv; }
+    if (av < bv) return sortAsc ? -1 : 1;
+    if (av > bv) return sortAsc ? 1 : -1;
+    return 0;
+  });
+  page = 1;
+  renderTable();
+}
+
+// ===================== SORT =====================
+function sortBy(field) {
+  if (sortField === field) { sortAsc = !sortAsc; }
+  else { sortField = field; sortAsc = true; }
+  document.querySelectorAll('th').forEach(th => th.classList.remove('sorted'));
+  document.getElementById('th-'+field).classList.add('sorted');
+  applyFilter();
+}
+
+// ===================== HIGHLIGHT =====================
+function hl(text) {
+  if (!searchQ.trim()) return text;
+  const q = searchQ.trim().replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+  return text.replace(new RegExp(q,'gi'), m=>`<mark>${m}</mark>`);
+}
+
+// ===================== RENDER TABLE =====================
+function renderTable() {
+  const total = filtered.length;
+  const totalPages = Math.max(1, Math.ceil(total / pageSize));
+  page = Math.min(page, totalPages);
+  const start = (page-1)*pageSize;
+  const end = Math.min(start+pageSize, total);
+  const slice = filtered.slice(start, end);
+
+  document.getElementById('resultCount').innerHTML = `แสดง <span>${total}</span> รายการ`;
+
+  const tbody = document.getElementById('tableBody');
+  if (!slice.length) {
+    tbody.innerHTML = `<tr><td colspan="5"><div class="no-result"><span class="icon">🔎</span>ไม่พบรายการที่ค้นหา</div></td></tr>`;
+  } else {
+    tbody.innerHTML = slice.map(r => `
+      <tr>
+        <td class="num">${r.id}</td>
+        <td class="name">${hl(r.name)}</td>
+        <td class="sangkad">${hl(r.sangkad)}</td>
+        <td><span class="year-badge">${r.year}</span></td>
+        <td><span class="gen-badge gen-${r.gen}">รุ่น ${r.gen}</span></td>
+      </tr>
+    `).join('');
+  }
+
+  // pagination
+  const bar = document.getElementById('paginationBar');
+  let pages = '';
+  const delta = 2;
+  for (let p=1; p<=totalPages; p++) {
+    if (p===1 || p===totalPages || (p>=page-delta && p<=page+delta)) {
+      pages += `<button class="page-btn${p===page?' active':''}" onclick="goPage(${p})">${p}</button>`;
+    } else if (p===page-delta-1 || p===page+delta+1) {
+      pages += `<span style="color:var(--text-muted);padding:0 4px">…</span>`;
+    }
+  }
+  bar.innerHTML = `
+    <div class="page-info">หน้า ${page} จาก ${totalPages} (${start+1}–${end} จาก ${total})</div>
+    <div class="page-btns">
+      <button class="page-btn" onclick="goPage(page-1)" ${page<=1?'disabled':''}>‹</button>
+      ${pages}
+      <button class="page-btn" onclick="goPage(page+1)" ${page>=totalPages?'disabled':''}>›</button>
+      <select class="page-size-select" onchange="changePageSize(this.value)">
+        ${[10,20,50,100].map(n=>`<option value="${n}"${pageSize===n?' selected':''}>${n}/หน้า</option>`).join('')}
+      </select>
+    </div>
+  `;
+}
+
+function goPage(p) { page = p; renderTable(); }
+function changePageSize(n) { pageSize = +n; page = 1; renderTable(); }
+
+// ===================== EVENTS =====================
+document.getElementById('searchInput').addEventListener('input', e => {
+  searchQ = e.target.value; applyFilter();
+});
+document.getElementById('filterSangkad').addEventListener('change', e => {
+  fSangkad = e.target.value; applyFilter();
+});
+document.getElementById('filterGen').addEventListener('change', e => {
+  fGen = e.target.value; applyFilter();
+});
+document.getElementById('filterYear').addEventListener('change', e => {
+  fYear = e.target.value; applyFilter();
+});
+
+// ===================== START =====================
+init();
+</script>
+</body>
+</html>
